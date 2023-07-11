@@ -17,9 +17,7 @@ var charFreq = map[string]float64{
 }
 
 func main() {
-
 	ciphers := readFile()
-	fmt.Println(len(ciphers))
 	decrypters := make([]decrypt.SingleBitXorDecrypter, len(ciphers))
 
 	for i, cipher := range ciphers {
@@ -68,9 +66,8 @@ func readFile() []cipher.Cipher {
 		lines = append(lines, line)
 	}
 
-	fmt.Println(len(lines))
 	ciphers := make([]cipher.Cipher, len(lines))
-	fmt.Println(len(ciphers))
+
 	for i, l := range lines {
 		c := cipher.NewCipher(l)
 		ciphers[i] = c
