@@ -17,6 +17,7 @@ var charFreq = map[string]float64{
 }
 
 func main() {
+
 	ciphers := readFile()
 	fmt.Println(len(ciphers))
 	decrypters := make([]decrypt.SingleBitXorDecrypter, len(ciphers))
@@ -26,21 +27,27 @@ func main() {
 		decrypters[i].Decrypt()
 	}
 
-	topResults := make([]decrypt.Result, (len(decrypters) * 3))
-	for i, d := range decrypters {
-		tr := d.Results[:3]
-		j := i * 3
+	resultSampleSize := 3
 
-		topResults[j] = tr[0]
-		topResults[j+1] = tr[1]
-		topResults[j+2] = tr[2]
+	// Take top X results of from each decrypter and aggregate them
+	topResults := make([]decrypt.Result, (len(decrypters) * resultSampleSize))
+	for i, d := range decrypters {
+		tr := d.Results[:resultSampleSize]
+
+		j := i * resultSampleSize
+
+		for k := 0; k < len(tr); k++ {
+			topResults[j+k] = tr[k]
+		}
 	}
 
+	// Reorder them by the highest score
 	sort.Slice(topResults, func(i, j int) bool {
 		return topResults[i].Score > topResults[j].Score
 	})
 
-	for i := 0; i < 5; i++ {
+	// Sample the top X results
+	for i := 0; i < resultSampleSize; i++ {
 		r := topResults[i]
 
 		fmt.Println(
