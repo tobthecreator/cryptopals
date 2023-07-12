@@ -8,7 +8,7 @@ func TestHammingDistance(t *testing.T) {
 		s2 := "wokka wokka!!!"
 		expected := 37
 
-		result := HammingDistance(s1, s2)
+		result := HammingDistance([]byte(s1), []byte(s2))
 		if result != expected {
 			t.Errorf("Expected Hamming distance to be %d, but got %d", expected, result)
 		}

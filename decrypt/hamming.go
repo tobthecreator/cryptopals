@@ -21,7 +21,7 @@ func HammingWeight(bytes []byte) int {
 	return weight
 }
 
-func HammingDistance(s1 string, s2 string) int {
+func HammingDistance(a []byte, b []byte) int {
 	getValue := func(arr []byte, index int) (byte, error) {
 		if index < 0 || index >= len(arr) {
 			return 0, errors.New("Index out of range")
@@ -29,9 +29,6 @@ func HammingDistance(s1 string, s2 string) int {
 
 		return arr[index], nil
 	}
-
-	a := []byte(s1)
-	b := []byte(s2)
 
 	d := 0
 
